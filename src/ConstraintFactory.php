@@ -2,6 +2,7 @@
 
 namespace Atom\Validation;
 
+use Atom\Validation\Constraints\AlphabeticOnlyConstraint;
 use Atom\Validation\Constraints\AlphaNumericOnlyConstraint;
 use Atom\Validation\Constraints\ArrayConstraint;
 use Atom\Validation\Constraints\BetweenConstraint;
@@ -73,7 +74,7 @@ class ConstraintFactory
 
     public function alphabetic(): self
     {
-        $this->expectation->addConstraint(new AlphaNumericOnlyConstraint());
+        $this->expectation->addConstraint(new AlphabeticOnlyConstraint());
         return $this;
     }
 
