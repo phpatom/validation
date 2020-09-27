@@ -33,7 +33,7 @@ abstract class AbstractConstraint implements ValidationConstraintContract
     public function value($field, $data)
     {
         if (!$this->exist($field, $data)) {
-            throw new Exception("The field $field does not exists");
+            return null;
         }
         return $data[$field];
     }
@@ -52,7 +52,7 @@ abstract class AbstractConstraint implements ValidationConstraintContract
      * @return float
      * @throws Exception
      */
-    public function lengthOf(string $key, array $data):float
+    public function lengthOf(string $key, array $data): float
     {
         $value = $this->value($key, $data);
         if (is_numeric($value)) {
@@ -70,16 +70,16 @@ abstract class AbstractConstraint implements ValidationConstraintContract
         throw new \Exception("we are unable to get the size/length of $key");
     }
 
-    public function isNotEmpty(string $key, array $data):float
+    public function isNotEmpty(string $key, array $data): float
     {
         $value = $this->value($key, $data);
-        $isNotEmpty  = true;
+        $isNotEmpty = true;
         $isNotEmpty = $isNotEmpty && !is_null($key);
-        $isNotEmpty = $isNotEmpty && ($value !=  "");
+        $isNotEmpty = $isNotEmpty && ($value != "");
         if (is_array($value) || is_countable($value)) {
             $isNotEmpty = $isNotEmpty && (count($value) != 0);
         }
-        if ($value instanceof  UploadedFileInterface) {
+        if ($value instanceof UploadedFileInterface) {
             $isNotEmpty = $isNotEmpty && ($value->getClientFilename() != "");
         }
         return $isNotEmpty;

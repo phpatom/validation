@@ -21,29 +21,28 @@ class AbstractConstraintTest extends BaseTestCase
 
     public function testCheck()
     {
-         $constraint = $this->makeConstraint();
-         $constraint->method("validate")->willReturn(true);
-         $this->assertNull($constraint->check("bar", []));
+        $constraint = $this->makeConstraint();
+        $constraint->method("validate")->willReturn(true);
+        $this->assertNull($constraint->check("bar", []));
 
-         $constraint = $this->makeConstraint();
-         $constraint->method("validate")->willReturn(false);
-         $constraint->method("getKey")->willReturn("foo");
-         $this->assertEquals("foo", $constraint->check("bar", []));
+        $constraint = $this->makeConstraint();
+        $constraint->method("validate")->willReturn(false);
+        $constraint->method("getKey")->willReturn("foo");
+        $this->assertEquals("foo", $constraint->check("bar", []));
     }
 
     public function testExists()
     {
         $constraint = $this->makeConstraint();
-        $this->assertTrue($constraint->exist("foo", ["foo"=>"bar"]));
-        $this->assertFalse($constraint->exist("baz", ["foo"=>"bar"]));
+        $this->assertTrue($constraint->exist("foo", ["foo" => "bar"]));
+        $this->assertFalse($constraint->exist("baz", ["foo" => "bar"]));
     }
 
     public function testValue()
     {
         $constraint = $this->makeConstraint();
-        $this->assertEquals("bar", $constraint->value("foo", ["foo"=>"bar"]));
-        $this->expectException(Exception::class);
-        $constraint->value("baz", ["foo" => "bar"]);
+        $this->assertEquals("bar", $constraint->value("foo", ["foo" => "bar"]));
+        $this->assertNull($constraint->value("baz", ["foo" => "bar"]));
     }
 
     public function testGetAttributes()
@@ -60,7 +59,7 @@ class AbstractConstraintTest extends BaseTestCase
         $constraint = $this->makeConstraint();
         $this->assertEquals($constraint->lengthOf("foo", ["foo" => 4]), 4);
         $this->assertEquals($constraint->lengthOf("foo", ["foo" => 3.1]), 3.1);
-        $this->assertEquals($constraint->lengthOf("foo", ["foo" => ["a","b","c","d"]]), 4);
+        $this->assertEquals($constraint->lengthOf("foo", ["foo" => ["a", "b", "c", "d"]]), 4);
         $this->assertEquals($constraint->lengthOf("foo", ["foo" => "abcde"]), 5);
         $this->assertEquals($constraint->lengthOf("foo", ["foo" => "24"]), 24);
         $file = $this->getMockBuilder(UploadedFileInterface::class)->getMock();
