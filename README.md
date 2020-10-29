@@ -67,7 +67,7 @@ $v->assert("created_at")->is()->present()->filled()->date()->and()->before("now"
   
 $v->validate($request); // throw ValidationException   
 //OR
-$v->check($request); // throw ValidationException   
+$v->check($request);
 if($v->failed()){
    return $v->errors();
 }
